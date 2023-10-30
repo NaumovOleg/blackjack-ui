@@ -1,26 +1,27 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import "./App.css";
+import { useDispatch } from "react-redux";
+import { startGameAction } from "./actions/actions";
 
-function App() {
+import { Board } from "./components/board";
+
+import { Button } from "@mui/base/Button";
+
+export const App = () => {
+  const dispatch = useDispatch<any>();
+  const [isGameStarted, startGame] = useState(false);
+
+  const handleStartGame = () => {
+    dispatch(startGameAction());
+    startGame(true);
+  };
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <section style={{ minHeight: "100vh" }}>
+      {isGameStarted ? (
+        <Board />
+      ) : (
+        <Button onClick={handleStartGame}>Start game</Button>
+      )}
+    </section>
   );
-}
-
-export default App;
+};
